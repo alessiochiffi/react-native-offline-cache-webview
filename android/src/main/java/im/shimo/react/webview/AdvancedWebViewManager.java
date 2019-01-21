@@ -277,7 +277,7 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
 
         @Override
         public void linkBridge() {
-            if (getOriginalUrl().equals(BLANK_URL)) {
+            if (getOriginalUrl() == null || getOriginalUrl().equals(BLANK_URL)) {
                 return;
             }
             if (mMessagingEnabled) {
