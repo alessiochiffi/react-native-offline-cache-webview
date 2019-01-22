@@ -638,6 +638,8 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
         webView.getSettings().setDisplayZoomControls(false);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
+        webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        
         mWebViewConfig.configWebView(webView);
         reactContext.addLifecycleEventListener(webView);
         // Fixes broken full-screen modals/galleries due to body height being 0.
