@@ -638,7 +638,7 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
         webView.getSettings().setDisplayZoomControls(false);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
-        webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         
         mWebViewConfig.configWebView(webView);
         reactContext.addLifecycleEventListener(webView);
