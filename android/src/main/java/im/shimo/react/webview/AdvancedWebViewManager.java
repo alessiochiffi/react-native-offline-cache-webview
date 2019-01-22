@@ -24,6 +24,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import android.text.TextUtils;
+
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
@@ -277,7 +279,7 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
 
         @Override
         public void linkBridge() {
-            if (getOriginalUrl() == null || getOriginalUrl().equals(BLANK_URL)) {
+            if (TextUtils.isEmpty(getOriginalUrl()) || getOriginalUrl().equals(BLANK_URL)) {
                 return;
             }
             if (mMessagingEnabled) {
