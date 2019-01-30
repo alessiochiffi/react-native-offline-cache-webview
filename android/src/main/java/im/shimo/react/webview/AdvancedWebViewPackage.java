@@ -7,11 +7,14 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import ren.yale.android.cachewebviewlib.CacheType;
+import ren.yale.android.cachewebviewlib.ResourceInterceptor;
 import ren.yale.android.cachewebviewlib.WebViewCacheInterceptor;
 import ren.yale.android.cachewebviewlib.WebViewCacheInterceptorInst;
 import ren.yale.android.cachewebviewlib.config.CacheExtensionConfig;
@@ -42,7 +45,20 @@ public class AdvancedWebViewPackage implements ReactPackage {
                 .setCacheExtensionConfig(extension)
                 .setConnectTimeoutSecond(20)//set http connect timeou,default 20 seconds
                 .setReadTimeoutSecond(20)//set http read timeout,default 20 seconds
-                .setCacheType(CacheType.NORMAL);//set cache modal is normal, default is force cache static modal
+                .setCacheType(CacheType.NORMAL)
+                .setResourceInterceptor(new ResourceInterceptor() {
+                    @Override
+                    public boolean interceptor(String url) {
+                        try {
+                            URL urlObj = new URL(url);
+                            String[] fileparts = urlObj.getFile().split("/");
+                            return fileparts[fileparts.length-1].contains(".");
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        }
+                        return true;
+                    }
+                });;//set cache modal is normal, default is force cache static modal
 
         WebViewCacheInterceptorInst.getInstance().init(builder);
 
