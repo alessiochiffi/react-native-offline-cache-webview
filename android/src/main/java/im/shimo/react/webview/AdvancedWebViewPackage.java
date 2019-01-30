@@ -31,6 +31,7 @@ public class AdvancedWebViewPackage implements ReactPackage {
         WebViewCacheInterceptor.Builder builder =  new WebViewCacheInterceptor.Builder(reactApplicationContext);
 
         CacheExtensionConfig extension = new CacheExtensionConfig();
+
         extension.removeExtension("html")
                 .removeExtension("htm")
                 .removeExtension("php")
@@ -54,7 +55,21 @@ public class AdvancedWebViewPackage implements ReactPackage {
                 .setCacheExtensionConfig(extension)
                 .setConnectTimeoutSecond(20)//set http connect timeou,default 20 seconds
                 .setReadTimeoutSecond(20)//set http read timeout,default 20 seconds
-                .setCacheType(CacheType.NORMAL);
+                .setCacheType(CacheType.NORMAL)
+                .setResourceInterceptor(new ResourceInterceptor() {
+                    @Override
+                    public boolean interceptor(String url) {
+                        try {
+                           URL urlObj = new URL(url);
+                           String path = urlObj.getPath();
+                           if(path.contains(".")){
+                               return !Config.NON_CACHING_EXTENSIONS.contains(path.substring(path.lastIndexOf(".")));
+                           }
+                        } catch(MalformedURLException ignored){
+                        }
+                        return false;
+                    }
+                });
 
         WebViewCacheInterceptorInst.getInstance().init(builder);
 
