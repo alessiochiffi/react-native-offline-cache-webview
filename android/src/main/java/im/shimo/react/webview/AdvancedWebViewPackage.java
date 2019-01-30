@@ -27,8 +27,19 @@ public class AdvancedWebViewPackage implements ReactPackage {
         //Initialize WebViewCacheInterceptor with config
         WebViewCacheInterceptor.Builder builder =  new WebViewCacheInterceptor.Builder(reactApplicationContext);
 
+        CacheExtensionConfig extension = new CacheExtensionConfig();
+        extension.removeExtension("html")
+                .removeExtension("htm")
+                .removeExtension("js")
+                .removeExtension("php")
+                .removeExtension("txt")
+                .removeExtension("text")
+                .removeExtension("json");
+
+
         builder.setCachePath(new File(reactApplicationContext.getCacheDir(),"cache_path_name"))//set cache path, default getCacheDir, name CacheWebViewCache
                 .setCacheSize(1024*1024*100)
+                .setCacheExtensionConfig(extension)
                 .setConnectTimeoutSecond(20)//set http connect timeou,default 20 seconds
                 .setReadTimeoutSecond(20)//set http read timeout,default 20 seconds
                 .setCacheType(CacheType.FORCE);//set cache modal is normal, default is force cache static modal
