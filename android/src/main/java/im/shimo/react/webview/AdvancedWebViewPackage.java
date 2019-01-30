@@ -36,6 +36,7 @@ public class AdvancedWebViewPackage implements ReactPackage {
                 .removeExtension("php")
                 .removeExtension("txt")
                 .removeExtension("text")
+                .removeExtension("js")
                 .removeExtension("json")
                 .removeExtension("")
                 .addExtension("mp4")
