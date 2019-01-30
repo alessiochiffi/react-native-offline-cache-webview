@@ -33,7 +33,6 @@ public class AdvancedWebViewPackage implements ReactPackage {
         CacheExtensionConfig extension = new CacheExtensionConfig();
         extension.removeExtension("html")
                 .removeExtension("htm")
-                .removeExtension("js")
                 .removeExtension("php")
                 .removeExtension("txt")
                 .removeExtension("text")
