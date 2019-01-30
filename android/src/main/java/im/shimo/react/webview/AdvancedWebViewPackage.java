@@ -36,7 +36,16 @@ public class AdvancedWebViewPackage implements ReactPackage {
                 .removeExtension("php")
                 .removeExtension("txt")
                 .removeExtension("text")
-                .removeExtension("json");
+                .removeExtension("json")
+                .removeExtension("")
+                .addExtension("mp4")
+                .addExtension("mp3")
+                .addExtension("ogg")
+                .addExtension("avi")
+                .addExtension("wmv")
+                .addExtension("flv")
+                .addExtension("rmvb")
+                .addExtension("3gp");
 
 
         builder.setCachePath(new File(reactApplicationContext.getCacheDir(),"cache_path_name"))//set cache path, default getCacheDir, name CacheWebViewCache
