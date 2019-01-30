@@ -44,7 +44,7 @@ public class AdvancedWebViewPackage implements ReactPackage {
                 .setCacheExtensionConfig(extension)
                 .setConnectTimeoutSecond(20)//set http connect timeou,default 20 seconds
                 .setReadTimeoutSecond(20)//set http read timeout,default 20 seconds
-                .setCacheType(CacheType.NORMAL);
+                .setCacheType(CacheType.FORCE);
 
         WebViewCacheInterceptorInst.getInstance().init(builder);
 
