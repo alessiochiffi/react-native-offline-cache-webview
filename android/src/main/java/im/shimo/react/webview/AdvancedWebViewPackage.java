@@ -45,20 +45,7 @@ public class AdvancedWebViewPackage implements ReactPackage {
                 .setCacheExtensionConfig(extension)
                 .setConnectTimeoutSecond(20)//set http connect timeou,default 20 seconds
                 .setReadTimeoutSecond(20)//set http read timeout,default 20 seconds
-                .setCacheType(CacheType.NORMAL)
-                .setResourceInterceptor(new ResourceInterceptor() {
-                    @Override
-                    public boolean interceptor(String url) {
-                        try {
-                            URL urlObj = new URL(url);
-                            String[] fileparts = urlObj.getFile().split("/");
-                            return fileparts[fileparts.length-1].contains(".");
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                        }
-                        return true;
-                    }
-                });;//set cache modal is normal, default is force cache static modal
+                .setCacheType(CacheType.NORMAL);
 
         WebViewCacheInterceptorInst.getInstance().init(builder);
 
