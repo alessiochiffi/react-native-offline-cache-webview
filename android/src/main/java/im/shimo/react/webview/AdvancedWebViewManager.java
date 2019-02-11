@@ -1,7 +1,10 @@
 package im.shimo.react.webview;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.text.InputType;
@@ -17,6 +20,7 @@ import android.view.inputmethod.InputConnectionWrapper;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JavascriptInterface;
+import android.webkit.URLUtil;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -639,9 +643,9 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-        webView.getSettings().setAppCacheMaxSize(1024*1024*8);   
-        webView.getSettings().setAppCachePath(reactContext.getCacheDir().getAbsolutePath());    
-        
+        webView.getSettings().setAppCacheMaxSize(1024*1024*8);
+        webView.getSettings().setAppCachePath(reactContext.getCacheDir().getAbsolutePath());
+
         mWebViewConfig.configWebView(webView);
         reactContext.addLifecycleEventListener(webView);
         // Fixes broken full-screen modals/galleries due to body height being 0.
@@ -673,6 +677,29 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
     protected class AdvancedWebViewClient extends ReactWebViewClient {
         protected ArrayList<String> mPendingMessages = new ArrayList<>();
         protected volatile boolean mPageFinished = false;
+
+        @SuppressWarnings("deprecation")
+    @Override
+    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        return handleUri(view.getContext(), url);
+    }
+
+    @TargetApi(24)
+    @Override
+    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+        return handleUri(view.getContext(), request.getUrl().toString());
+    }
+
+    private boolean handleUri(Context context, String url) {
+        if( URLUtil.isNetworkUrl(url) ) {
+           return false;
+        }
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity( intent );
+        return true;
+    }
 
         @Override
         public void onPageFinished(WebView webView, String url) {
