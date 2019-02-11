@@ -473,7 +473,8 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
             mWebviews.remove(webView);
             //将最上层销毁
             dumpWebView(webView);
-            ((AdvancedWebViewClient) ((AdvancedWebView) webView).getWebViewClient()).mPendingMessages = new ArrayList<>();
+            if((webView!= null) && (((AdvancedWebViewClient) ((AdvancedWebView) webView).getWebViewClient())!=null))
+                ((AdvancedWebViewClient) ((AdvancedWebView) webView).getWebViewClient()).mPendingMessages = new ArrayList<>();
             super.onDropViewInstance(webView);
             //设置下一层为默认webview
             //唤醒下一层
