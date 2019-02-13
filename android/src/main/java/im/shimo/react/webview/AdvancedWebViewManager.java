@@ -696,9 +696,14 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
            return false;
         }
 
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity( intent );
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        }catch(Throwable ignored){
+
+        }
+
         return true;
     }
 
