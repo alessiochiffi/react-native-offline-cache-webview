@@ -648,6 +648,7 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
         webView.getSettings().setAppCacheMaxSize(1024*1024*8);
         webView.getSettings().setAppCachePath(reactContext.getCacheDir().getAbsolutePath());
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
         webView.getSettings().setLoadWithOverviewMode(true);
         if (Build.VERSION.SDK_INT >= 19) {
             webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
