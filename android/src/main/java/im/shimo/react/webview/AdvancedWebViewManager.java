@@ -12,6 +12,7 @@ import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.EditorInfo;
@@ -646,6 +647,13 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
         webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
         webView.getSettings().setAppCacheMaxSize(1024*1024*8);
         webView.getSettings().setAppCachePath(reactContext.getCacheDir().getAbsolutePath());
+        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        if (Build.VERSION.SDK_INT >= 19) {
+            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        } else {
+            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
 
         mWebViewConfig.configWebView(webView);
         reactContext.addLifecycleEventListener(webView);
