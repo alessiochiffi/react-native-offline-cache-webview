@@ -10,7 +10,6 @@ public class Config {
            add("php");
            add("txt");
            add("text");
-           add("js");
            add("json");
            add("");
        }
