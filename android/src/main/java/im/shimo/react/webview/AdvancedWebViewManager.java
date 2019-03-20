@@ -732,6 +732,11 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
             for (String message : mPendingMessages) {
                 webView.evaluateJavascript(message, null);
             }
+
+            if(!AdvancedWebViewManager.this.shouldOverrideUrlLoading){
+                webView.clearHistory();
+            }
+            
             mPendingMessages.clear();
         }
 
