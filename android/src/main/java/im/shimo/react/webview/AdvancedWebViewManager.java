@@ -122,6 +122,7 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
      * prop设置参数
      */
     private int mEnvValue;
+    private Boolean shouldOverrideUrlLoading=false;
 
     public AdvancedWebViewManager() {
         super();
@@ -684,6 +685,11 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
         return webView;
     }
 
+    @ReactProp(name="shouldOverrideUrlLoading")
+    public void setShouldOverrideUrlLoadings(AdvancedWebView advancedWebView, Boolean shouldOverrideUrlLoading) {
+        this.shouldOverrideUrlLoading=shouldOverrideUrlLoading;
+    }
+
     protected class AdvancedWebViewClient extends ReactWebViewClient {
         protected ArrayList<String> mPendingMessages = new ArrayList<>();
         protected volatile boolean mPageFinished = false;
@@ -691,13 +697,13 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
         @SuppressWarnings("deprecation")
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        return handleUri(view.getContext(), url)||super.shouldOverrideUrlLoading(view,url);
+        return AdvancedWebViewManager.this.shouldOverrideUrlLoading && (handleUri(view.getContext(), url)||super.shouldOverrideUrlLoading(view,url));
     }
 
     @TargetApi(24)
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-        return handleUri(view.getContext(), request.getUrl().toString())||super.shouldOverrideUrlLoading(view,request);
+        return AdvancedWebViewManager.this.shouldOverrideUrlLoading && (handleUri(view.getContext(), request.getUrl().toString())||super.shouldOverrideUrlLoading(view,request));
     }
 
     private boolean handleUri(Context context, String url) {
