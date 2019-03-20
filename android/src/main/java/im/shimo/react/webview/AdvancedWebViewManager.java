@@ -697,13 +697,15 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
         @SuppressWarnings("deprecation")
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        return (handleUri(view.getContext(), url)||super.shouldOverrideUrlLoading(view,url));
+        boolean isHandled = handleUri(view.getContext(), url);
+        return isHandled;
     }
 
     @TargetApi(24)
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-        return (handleUri(view.getContext(), request.getUrl().toString())||super.shouldOverrideUrlLoading(view,request));
+        boolean isHandled =  handleUri(view.getContext(), request.getUrl().toString());
+        return isHandled;
     }
 
     private boolean handleUri(Context context, String url) {
@@ -716,7 +718,6 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }catch(Throwable ignored){
-
         }
 
         return true;
