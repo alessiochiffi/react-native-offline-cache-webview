@@ -687,7 +687,8 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
     }
 
     @ReactProp(name="shouldOverrideUrlLoading")
-    public void setShouldOverrideUrlLoadings(AdvancedWebView advancedWebView, Boolean shouldOverrideUrlLoading) {
+    public void setShouldOverrideUrlLoadings(WebView view, Boolean shouldOverrideUrlLoading) {
+        Log.e("AdvancedWebViewClient","in AdvancedWebViewManager.setShouldOverrideUrlLoadings, shouldOverrideUrlLoading is "+shouldOverrideUrlLoading);
         this.shouldOverrideUrlLoading=shouldOverrideUrlLoading;
     }
 
