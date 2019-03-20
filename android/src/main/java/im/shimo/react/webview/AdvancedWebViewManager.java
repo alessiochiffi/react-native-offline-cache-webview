@@ -697,17 +697,17 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
         @SuppressWarnings("deprecation")
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        return AdvancedWebViewManager.this.shouldOverrideUrlLoading && (handleUri(view.getContext(), url)||super.shouldOverrideUrlLoading(view,url));
+        return (handleUri(view.getContext(), url)||super.shouldOverrideUrlLoading(view,url));
     }
 
     @TargetApi(24)
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-        return AdvancedWebViewManager.this.shouldOverrideUrlLoading && (handleUri(view.getContext(), request.getUrl().toString())||super.shouldOverrideUrlLoading(view,request));
+        return (handleUri(view.getContext(), request.getUrl().toString())||super.shouldOverrideUrlLoading(view,request));
     }
 
     private boolean handleUri(Context context, String url) {
-        if( URLUtil.isNetworkUrl(url) ) {
+        if( URLUtil.isNetworkUrl(url) && !AdvancedWebViewManager.this.shouldOverrideUrlLoading) {
            return false;
         }
 
@@ -736,7 +736,7 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
             if(!AdvancedWebViewManager.this.shouldOverrideUrlLoading){
                 webView.clearHistory();
             }
-            
+
             mPendingMessages.clear();
         }
 
