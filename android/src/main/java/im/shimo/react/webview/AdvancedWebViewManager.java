@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.text.InputType;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -709,6 +710,7 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
     }
 
     private boolean handleUri(Context context, String url) {
+            Log.e("AdvancedWebViewClient","in AdvancedWebViewClient.handleUri, AdvancedWebViewManager.this.shouldOverrideUrlLoading is "+AdvancedWebViewManager.this.shouldOverrideUrlLoading);
         if( URLUtil.isNetworkUrl(url) && !AdvancedWebViewManager.this.shouldOverrideUrlLoading) {
            return false;
         }
