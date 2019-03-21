@@ -123,7 +123,7 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
      * prop设置参数
      */
     private int mEnvValue;
-    private Boolean shouldOverrideUrlLoading=false;
+    private boolean shouldOverrideUrlLoading=false;
 
     public AdvancedWebViewManager() {
         super();
@@ -686,11 +686,7 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
         return webView;
     }
 
-    @ReactProp(name="shouldOverrideUrlLoading")
-    public void setShouldOverrideUrlLoadings(WebView view, Boolean shouldOverrideUrlLoading) {
-        Log.e("AdvancedWebViewClient","in AdvancedWebViewManager.setShouldOverrideUrlLoadings, shouldOverrideUrlLoading is "+shouldOverrideUrlLoading);
-        this.shouldOverrideUrlLoading=shouldOverrideUrlLoading;
-    }
+
 
     protected class AdvancedWebViewClient extends ReactWebViewClient {
         protected ArrayList<String> mPendingMessages = new ArrayList<>();
@@ -711,10 +707,6 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
     }
 
     private boolean handleUri(Context context, String url) {
-            Log.e("AdvancedWebViewClient","in AdvancedWebViewClient.handleUri, AdvancedWebViewManager.this.shouldOverrideUrlLoading is "+AdvancedWebViewManager.this.shouldOverrideUrlLoading);
-        if( URLUtil.isNetworkUrl(url) && !AdvancedWebViewManager.this.shouldOverrideUrlLoading) {
-           return false;
-        }
 
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -736,10 +728,8 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
             for (String message : mPendingMessages) {
                 webView.evaluateJavascript(message, null);
             }
+            webView.clearHistory();
 
-            if(!AdvancedWebViewManager.this.shouldOverrideUrlLoading){
-                webView.clearHistory();
-            }
 
             mPendingMessages.clear();
         }
@@ -819,6 +809,12 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
     @ReactProp(name = "keyboardDisplayRequiresUserAction")
     public void setKeyboardDisplayRequiresUserAction(WebView root, boolean keyboardDisplayRequiresUserAction) {
         ((AdvancedWebView) root).setKeyboardDisplayRequiresUserAction(keyboardDisplayRequiresUserAction);
+    }
+
+    @ReactProp(name="shouldOverrideUrlLoading")
+    public void setShouldOverrideUrlLoading(WebView view, boolean shouldOverrideUrlLoading) {
+        Log.e("AdvancedWebViewClient","in AdvancedWebViewManager.setShouldOverrideUrlLoading, shouldOverrideUrlLoading is "+shouldOverrideUrlLoading);
+        this.shouldOverrideUrlLoading=shouldOverrideUrlLoading;
     }
 
     /**
