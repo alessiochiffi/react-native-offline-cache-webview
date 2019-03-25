@@ -40,7 +40,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.facebook.react:react-native:+'
-    compile 'ren.yale.android:cachewebviewlib:2.1.7'
-    compile fileTree( dir: "libs", includes: ['*.jar'] )
+    implementation 'com.facebook.react:react-native:+'
+    implementation 'ren.yale.android:cachewebviewlib:2.1.7'
+    implementation fileTree( dir: "libs", includes: ['*.jar'] )
 }
