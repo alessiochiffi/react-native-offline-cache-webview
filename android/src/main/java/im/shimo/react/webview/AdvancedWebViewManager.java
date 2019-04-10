@@ -702,7 +702,7 @@ public class AdvancedWebViewManager extends ReactWebViewManager {
     @TargetApi(24)
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-        boolean isHandled =  handleUri(view.getContext(), request.getUrl().toString());
+        boolean isHandled = !request.isRedirect() && handleUri(view.getContext(), request.getUrl().toString());
         return isHandled;
     }
 
